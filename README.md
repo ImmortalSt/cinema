@@ -1,7 +1,3 @@
-# cinema
-Задание: https://github.com/pikvic/fefu2022/blob/main/cinema.md
-
-
 # CINEMA
 #
 #### Задание: https://github.com/pikvic/fefu2022/blob/main/cinema.md
