@@ -119,7 +119,9 @@ bool checkPossword(char password[21]) {
 
 accounts createUser(char login[21], char password[21]) {
     srand(time(NULL));
-    long int id = 1000000000000000 + rand() % 8999999999999999;
+    long int id = rand() % 9000000;
+    id *= 100000000;
+    id += rand() % 100000000 + 1000000000000000;
     accounts user = { "","",id,0,0 };
     strcpy(user.login, login);
     strcpy(user.password, password);
