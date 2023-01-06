@@ -1,3 +1,9 @@
+.vscode/
+main
+build/
+CMakeFiles
+makefile
+
 # Prerequisites
 *.d
 
