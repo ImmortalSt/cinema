@@ -2,10 +2,11 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 
 typedef struct accounts{
   char login[21], password[21];
-  long int cardNamber;
+  long int id;
   int favoritesSize, isAdmin;
 }accounts;
 
@@ -116,29 +117,24 @@ bool checkPossword(char password[21]){
   return flag;
 }
 
-accounts createUser(char login[21], char password[21], long int cardNamber){
-  accounts user = {"","",cardNamber,0,0};
+accounts createUser(char login[21], char password[21]){
+  srand(time(NULL));
+  long int id = 1000000000000000 + rand()%8999999999999999;
+  accounts user = {"","",id,0,0};
   strcpy(user.login, login);
   strcpy(user.password, password);
-  printf("%s %s 2\n1\n",login ,user.login);
   accounts voi = {"","",0,0,0};
   if(!checkLogin(user.login)){
-      printf("111");
-
     return voi;
   }
   if(!checkPossword(user.password)){
-      printf("222");
-
     return voi;
   }
-  if((user.cardNamber<999999999999999)||(user.cardNamber>9999999999999999)){
-      printf("333");
-
+  if((user.id<999999999999999)||(user.id>9999999999999999)){
     return voi;
   }
   FILE *users = fopen("users.txt", "a");
-  fprintf(users, "%s\n%s\n%ld\n0\n0\n",user.login,user.password,user.cardNamber);
+  fprintf(users, "%s\n%s\n%ld\n0\n0\n",user.login,user.password,user.id);
   fclose(users);
   char fileName[44];
   sprintf(fileName, "favorites/favorites_%s.txt", user.login);
@@ -148,7 +144,9 @@ accounts createUser(char login[21], char password[21], long int cardNamber){
 }
 
 accounts signIn(char login[21], char password[21]){
-  accounts user = {*login,*password,0,0,0};
+  accounts user = {"","",0,0,0};
+  strcpy(user.login, login);
+  strcpy(user.password, password);
   accounts voi = {"","",0,0,0};
   bool flag = true;
   char name[21];
@@ -176,16 +174,15 @@ accounts signIn(char login[21], char password[21]){
   }
   fgets(name, 21, users);
   name[strlen(name)-1] = 0;
-  if (strcmp(user.password,name)!=0)
+  if (strcmp(user.password,name)!=0){
     return voi;
+  }
   fgets(name, 21, users);
-  user.cardNamber = atol (name);
+  user.id = atol (name);
   fgets(name, 21, users);
   user.favoritesSize = atoi (name);
   fgets(name, 21, users);
   user.isAdmin = atoi (name);
   fclose(users);
-  free(name);
-  printf("111");
   return user;
 }
