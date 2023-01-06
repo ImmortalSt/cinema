@@ -125,7 +125,7 @@ accounts createUser(char login[21], char password[21]) {
     accounts user = { "","",id,0,0 };
     strcpy(user.login, login);
     strcpy(user.password, password);
-    accounts voi = { "","",0,0,0 };
+    accounts voi = { "","",0,0,-1 };
     if (!checkLogin(user.login)) {
         return voi;
     }
@@ -149,7 +149,7 @@ accounts signIn(char login[21], char password[21]) {
     accounts user = { "","",0,0,0 };
     strcpy(user.login, login);
     strcpy(user.password, password);
-    accounts voi = { "","",0,0,0 };
+    accounts voi = { "","",0,0,-1 };
     bool flag = true;
     char name[21];
     while (flag) {
