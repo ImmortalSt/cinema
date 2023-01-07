@@ -22,10 +22,10 @@ struct film pop_film(int wanted_position,int position_right_now,int number_of_fi
     }
 
     struct film res;
-    strcpy(res.str1, str1);
-    strcpy(res.str2, str2);
-    strcpy(res.str3, str3);
-    strcpy(res.str4, str4);
-    strcpy(res.str5, str5);
+    strcpy(res.name, str1);
+    strcpy(res.year, str2);
+    strcpy(res.country, str3);
+    strcpy(res.ganre, str4);
+    strcpy(res.range, str5);
     return res;
 }
