@@ -8,11 +8,11 @@
 
 struct film
 {
-     char str1[len];
-     char str2[len];
-     char str3[len];
-     char str4[len];
-     char str5[len];
+     char name[len];
+     char year[len];
+     char country[len];
+     char ganre[len];
+     char range[len];
 };
 
 struct film pop_film(int wanted_position,int position_right_now,int number_of_filmes);
