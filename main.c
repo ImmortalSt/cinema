@@ -7,7 +7,7 @@ int main() {
     
 
 
-    account user;
+    accounts user;
     while(1) {
         user = login_scena();
         if (user.isAdmin == -1) {

@@ -2,7 +2,7 @@
 
 #define BACKSPACE_CODE 127
 
-account login_scena() {
+accounts login_scena() {
     enum pictures pic[] = {login_1, login_2, login_3, login_4};
 
     char login[1000] = {0};
@@ -45,7 +45,7 @@ account login_scena() {
 }
 
 
-account register_scena() {
+accounts register_scena() {
     char login[1000];
     char password[1000];
     memset(login, 0, 1000);
@@ -76,14 +76,14 @@ account register_scena() {
             } else if (strlen(password) <= 55) strcat(password, button);
 
         } else if (pic_current_state == 2 && button[0] == '\r') {
-            account user = createUser(login, password);
+            accounts user = createUser(login, password);
             return user;
         }
     }
 
 }
 
-void menu_scena(account user){
+void menu_scena(accounts user){
     film* films = get_films();
     int current_pos = 500;
     char button[] = "\0\0";

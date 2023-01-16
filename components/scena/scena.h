@@ -12,8 +12,8 @@
     #include <windows.h>
 #endif
 
-account login_scena();
+accounts login_scena();
 
-account register_scena();
+accounts register_scena();
 
-void menu_scena(account user);
+void menu_scena(accounts user);
