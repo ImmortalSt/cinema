@@ -1,10 +1,10 @@
 #include <stdbool.h>
 
-typedef struct accounts{
+typedef struct account{
   char login[21], password[21];
   long int id;
   int favoritesSize, isAdmin;
-}accounts;
+}account;
 
-accounts createUser(char login[21], char password[21]);
-accounts signIn(char login[21], char password[21]);
+account createUser(char login[21], char password[21]);
+account signIn(char login[21], char password[21]);

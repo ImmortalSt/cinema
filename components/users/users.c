@@ -18,7 +18,7 @@ bool checkLogin(char login[21]) {
     }
     else {
         flag = true;
-        char name[20] = "1";
+        char name[21] = "1";
         FILE* users = fopen("components/users/users.txt", "r");
         while (fgets(name, 21, users) != NULL) {
             name[strlen(name) - 1] = 0;

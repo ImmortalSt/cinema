@@ -2,19 +2,21 @@
 #define C3_C_POP_FILM_H
 
 #include <stdio.h>
-
+#include <string.h>
+#include <stdlib.h>
 
 #define len 100
 
-struct film
+typedef struct film
 {
      char name[len];
      char year[len];
      char country[len];
      char ganre[len];
      char range[len];
-};
+} film ;
 
-struct film pop_film(int wanted_position,int position_right_now,int number_of_filmes);
+film* get_films();
+int films_count();
 
 #endif //C3_C_POP_FILM_H

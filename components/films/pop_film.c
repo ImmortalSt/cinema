@@ -1,31 +1,35 @@
 #include "pop_film.h"
-#include <string.h>
-#include <stdlib.h>
 
+film* get_films(){
+    film* result = malloc(sizeof(film) * 100);
+    memset(result, 0, sizeof(film) * 100);
 
-struct film pop_film(int wanted_position,int position_right_now,int number_of_filmes)
-{
-    char str1[len];
-    char str2[len];
-    char str3[len];
-    char str4[len];
-    char str5[len];
-    FILE *file;
-    file=fopen("films.txt","r");
-    for(int i=0;i < ((wanted_position + position_right_now) % number_of_filmes);i++)
-    {
-        fgets(str1, len, file);
-        fgets(str2, len, file);
-        fgets(str3, len, file);
-        fgets(str4, len, file);
-        fgets(str5, len, file);
+    FILE* file = fopen("components/films/films.txt", "r");
+
+    for (int i = 0; !feof(file); i++) {
+
+        film item;
+        char trash;
+        fscanf(file, "%[^\n]s", (char*)&item.name);
+        fscanf(file, "%c", &trash);
+        fscanf(file, "%[^\n]s", (char*)&item.year);
+        fscanf(file, "%c", &trash);
+        fscanf(file, "%[^\n]s", (char*)&item.country);
+        fscanf(file, "%c", &trash);
+        fscanf(file, "%[^\n]s", (char*)&item.ganre);
+        fscanf(file, "%c", &trash);
+        fscanf(file, "%[^\n]s", (char*)&item.range);
+        fscanf(file, "%c", &trash);
+
+        result[i] = item;
     }
 
-    struct film res;
-    strcpy(res.name, str1);
-    strcpy(res.year, str2);
-    strcpy(res.country, str3);
-    strcpy(res.ganre, str4);
-    strcpy(res.range, str5);
-    return res;
+    return result;
+}
+
+int films_count() {
+    film* films = get_films();
+    int result = 0;
+    while (films[result].name[0] != '\0') result++;
+    return result;
 }
