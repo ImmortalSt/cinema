@@ -4,6 +4,10 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define T_FILE "components/users/temp.txt"
+#define U_FILE "components/users/users.txt"
+#define F_FILE "components/users/favorites/favorites_%s.txt"
+
 typedef struct accounts{
   char login[21], password[21];
   long int id;
@@ -117,13 +121,45 @@ bool checkPossword(char password[21]){
   return flag;
 }
 
+//void replaceUser(accounts *user ,char *component, char* old_Variable, char* new_Variable){
+void replaceUser(accounts *user ,char *component, int old_Variable, int new_Variable){
+  FILE *fin, *fout;
+  fin = fopen(U_FILE, "r");
+  fout = fopen(T_FILE, "w");
+  char name[21];
+  fgets(name,21,fin);
+  name[strlen(name)-1] = 0;
+  while (strcmp(user->login,name) !=  0){
+    fprintf(fout, "%s\n",name);
+    fgets(name,21,fin);
+    name[strlen(name)-1] = 0;
+  }
+  if (true){
+    fprintf(fout, "%s",name);
+    fgets(name,21,fin);
+    fprintf(fout, "\n%s",name);
+    fgets(name,21,fin);
+    fprintf(fout, "%s",name);
+    fgets(name,21,fin);
+    fprintf(fout,"%d\n", new_Variable);
+    //int i_new = atoi (new_Variable);
+    user->favoritesSize = new_Variable;
+  }
+  while (fgets(name, 21, fin) != NULL)
+    fprintf(fout, "%s",name);
+  fclose(fin);
+  fclose(fout);
+  remove(U_FILE);
+  rename(T_FILE, U_FILE);
+}
+
 accounts createUser(char login[21], char password[21]){
   srand(time(NULL));
   long int id = 1000000000000000 + rand()%8999999999999999;
   accounts user = {"","",id,0,0};
   strcpy(user.login, login);
   strcpy(user.password, password);
-  accounts voi = {"","",0,0,0};
+  accounts voi = {"","",0,0,-1};
   if(!checkLogin(user.login)){
     return voi;
   }
@@ -133,11 +169,11 @@ accounts createUser(char login[21], char password[21]){
   if((user.id<999999999999999)||(user.id>9999999999999999)){
     return voi;
   }
-  FILE *users = fopen("components/users/users.txt", "a");
+  FILE *users = fopen(U_FILE, "a");
   fprintf(users, "%s\n%s\n%ld\n0\n0\n",user.login,user.password,user.id);
   fclose(users);
   char fileName[63];
-  sprintf(fileName, "components/users/favorites/favorites_%s.txt", user.login);
+  sprintf(fileName, F_FILE, user.login);
   FILE *favorites = fopen(fileName, "w");
   fclose(favorites);
   return user;
@@ -147,11 +183,11 @@ accounts signIn(char login[21], char password[21]){
   accounts user = {"","",0,0,0};
   strcpy(user.login, login);
   strcpy(user.password, password);
-  accounts voi = {"","",0,0,0};
+  accounts voi = {"","",0,0,-1};
   bool flag = true;
   char name[21];
   while(flag){
-    FILE *users = fopen("components/users/users.txt", "r");
+    FILE *users = fopen(U_FILE, "r");
     while (fgets(name, 21, users) != NULL){
       name[strlen(name)-1] = 0;
       if (strcmp(user.login,name)==0){
@@ -165,7 +201,7 @@ accounts signIn(char login[21], char password[21]){
     }
   }
   // Не ебу как это починить, поэтому ловите ещё один перебор файла
-  FILE *users = fopen("components/users/users.txt", "r");
+  FILE *users = fopen(U_FILE, "r");
   while (fgets(name, 21, users) != NULL){
     name[strlen(name)-1] = 0;
     if (strcmp(user.login,name)==0){
@@ -189,8 +225,8 @@ accounts signIn(char login[21], char password[21]){
 
 void pop_film(accounts *user, char *filmName){
   char fileName[63];
-  sprintf(fileName, "components/users/favorites/favorites_%s.txt", user->login);
-  FILE *favorites = fopen(fileName, "r");
+  sprintf(fileName, F_FILE, user->login);
+  FILE *favorites = fopen(fileName, "a+");
   char name[40];
   bool flag = true;
   while (fgets(name,40,favorites) != NULL){
@@ -200,11 +236,13 @@ void pop_film(accounts *user, char *filmName){
       break;
     }
   }
-  fclose(favorites);
   if (flag) {
-    FILE *favorites = fopen(fileName, "a");
     fprintf(favorites, "%s\n",filmName);
-    fclose(favorites);
-    user->favoritesSize += 1;
+    //char f_old[10], f_in[10];
+    //sprintf(f_old, "%d", user->favoritesSize);
+    //sprintf(f_in, "%d", user->favoritesSize+1);
+    //replaceUser(user,"favoritesSize",f_old,f_in);
+    replaceUser(user,"favoritesSize",user->favoritesSize,user->favoritesSize+1);
   }
+  fclose(favorites);
 }
