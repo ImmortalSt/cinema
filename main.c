@@ -4,7 +4,7 @@
 
 int main() {
     setlocale(LC_ALL, "");
-    
+
 
 
     accounts user;
@@ -12,7 +12,7 @@ int main() {
         user = login_scena();
         if (user.isAdmin == -1) {
             print_pictures(error);
-            sleep(1);
+            sleep(1);                                           
         } else {
             break;
         }

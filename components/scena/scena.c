@@ -16,8 +16,9 @@ accounts login_scena() {
         print_pictures(pic[pic_current_state], login, password);
         button[0] = _getchar();
 
-        if(button[0] == '\t') {
+        if ((button[0] < 33 || button[0] > 127) && button[0] != '\t' && button[0] != '\r') continue;
 
+        if(button[0] == '\t') {
             pic_current_state = (pic_current_state + 1) % 4;
         
         } else if(pic_current_state == 0) {
@@ -58,6 +59,9 @@ accounts register_scena() {
     while (1) {
         print_pictures(pic[pic_current_state], login, password);
         button[0] = _getchar();
+
+        if ((button[0] < 33 || button[0] > 127) && button[0] != '\t' && button[0] != '\r') continue;
+
 
         if(button[0] == '\t') {
 

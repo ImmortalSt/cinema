@@ -12,4 +12,4 @@ includes=""
 for i in $(find -name "*.o"); do
     includes+="$i "
 done;
-gcc -g main.c -o main $includes
+gcc main.c -o main $includes
