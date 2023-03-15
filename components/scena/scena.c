@@ -103,12 +103,21 @@ void menu_scena(accounts user){
         );
         button[0] = _getchar();
         if (button[0] == 'a') {
+            print_pictures(Left anim);
+            usleep(200000);
             print_pictures(menu_anim);
             usleep(200000);
+            print_pictures(Right anim);
+            usleep(200000);
+            
             current_pos--;
         } else if (button[0] == 'd')
         {
+            print_pictures(Right anim);
+            usleep(200000);
             print_pictures(menu_anim);
+            usleep(200000);
+            print_pictures(Left anim);
             usleep(200000);
 
             current_pos++;
